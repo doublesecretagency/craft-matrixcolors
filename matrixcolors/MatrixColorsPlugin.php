@@ -9,16 +9,9 @@ class MatrixColorsPlugin extends BasePlugin
 	public function init()
 	{
 		parent::init();
-		$this->_matrixBlockColors = $this->getSettings()->matrixBlockColors;
-		$blockColors = '';
-		if ($this->_matrixBlockColors) {
-			foreach ($this->_matrixBlockColors as $row) {
-				if ($blockColors) {$blockColors .= ',';}
-				$blockColors .= "'{$row['blockType']}':'{$row['backgroundColor']}'";
-			}
+		if ($this->_isCp()) {
+			$this->_colorBlocks();
 		}
-		craft()->templates->includeJs('var blockColors = {'.$blockColors.'}');
-		craft()->templates->includeJsResource('matrixcolors/js/matrixcolors.js');
 	}
 
 	public function getName()
@@ -28,7 +21,7 @@ class MatrixColorsPlugin extends BasePlugin
 
 	public function getVersion()
 	{
-		return '0.9.9';
+		return '1.0.0';
 	}
 
 	public function getDeveloper()
@@ -82,6 +75,27 @@ class MatrixColorsPlugin extends BasePlugin
 		return craft()->templates->render('matrixcolors/_settings', array(
 			'matrixBlockColorsTable' => $matrixBlockColorsTable,
 		));
+	}
+
+	private function _isCp()
+	{
+		$currentUrl = craft()->request->getUrl();
+		$admin = craft()->config->get('cpTrigger');
+		return (strpos($currentUrl, "/$admin/") !== false);
+	}
+
+	private function _colorBlocks()
+	{
+		$this->_matrixBlockColors = $this->getSettings()->matrixBlockColors;
+		$blockColors = '';
+		if ($this->_matrixBlockColors) {
+			foreach ($this->_matrixBlockColors as $row) {
+				if ($blockColors) {$blockColors .= ',';}
+				$blockColors .= "'{$row['blockType']}':'{$row['backgroundColor']}'";
+			}
+		}
+		craft()->templates->includeJs('var blockColors = {'.$blockColors.'}');
+		craft()->templates->includeJsResource('matrixcolors/js/matrixcolors.js');
 	}
 	
 }
