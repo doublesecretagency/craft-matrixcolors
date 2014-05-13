@@ -9,7 +9,7 @@ class MatrixColorsPlugin extends BasePlugin
 	public function init()
 	{
 		parent::init();
-		if ($this->_isCp()) {
+		if (craft()->request->isCpRequest()) {
 			$this->_colorBlocks();
 		}
 	}
@@ -21,7 +21,7 @@ class MatrixColorsPlugin extends BasePlugin
 
 	public function getVersion()
 	{
-		return '1.0.0';
+		return '1.0.1';
 	}
 
 	public function getDeveloper()
@@ -75,13 +75,6 @@ class MatrixColorsPlugin extends BasePlugin
 		return craft()->templates->render('matrixcolors/_settings', array(
 			'matrixBlockColorsTable' => $matrixBlockColorsTable,
 		));
-	}
-
-	private function _isCp()
-	{
-		$currentUrl = craft()->request->getUrl();
-		$admin = craft()->config->get('cpTrigger');
-		return (strpos($currentUrl, "/$admin/") !== false);
 	}
 
 	private function _colorBlocks()
