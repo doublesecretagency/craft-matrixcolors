@@ -1,10 +1,12 @@
 
-// On load, colorize blocks and listen for new blocks
+// On load, colorize blocks
 $(function () {
 	colorizeMatrixBlocks();
-	$('.matrix .btn').on('click', function () {
-		colorizeMatrixBlocks();
-	});
+});
+
+// Listen for new blocks
+$(document).on('click', '.matrix .btn', function () {
+	colorizeMatrixBlocks();
 });
 
 // Find all matrix blocks, add specified background color
