@@ -21,7 +21,7 @@ class MatrixColorsPlugin extends BasePlugin
 
 	public function getVersion()
 	{
-		return '1.0.1';
+		return '1.0.2';
 	}
 
 	public function getDeveloper()
@@ -59,7 +59,6 @@ class MatrixColorsPlugin extends BasePlugin
 					'blockType' => array(
 						'heading' => Craft::t('Block Type Handle'),
 						'type'    => 'singleline',
-						//'class'   => 'code',
 					),
 					'backgroundColor' => array(
 						'heading' => Craft::t('CSS Background Color'),

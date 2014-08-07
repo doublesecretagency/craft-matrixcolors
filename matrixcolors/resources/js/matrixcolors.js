@@ -2,10 +2,11 @@
 // On load, colorize blocks
 $(function () {
 	colorizeMatrixBlocks();
+	colorizeMatrixButtons();
 });
 
 // Listen for new blocks
-$(document).on('click', '.matrix .btn', function () {
+$(document).on('click', '.matrix .btn, .menu ul li a', function () {
 	colorizeMatrixBlocks();
 });
 
@@ -16,4 +17,14 @@ function colorizeMatrixBlocks() {
 		blockType = $(this).find('input[type="hidden"][name*="][type]"]').val();
 		$(this).css({'background-color':blockColors[blockType]});
 	});
+}
+
+// Find buttons related to Matrix, update background color
+function colorizeMatrixButtons() {
+	var blockType;
+	for (blockType in blockColors) {
+		if (blockColors.hasOwnProperty(blockType)) {
+			$('.matrix').find('.buttons .btngroup .btn[data-type="'+blockType+'"]').css({'background-image':'linear-gradient(white,'+blockColors[blockType]+')'});
+		}
+	}
 }
