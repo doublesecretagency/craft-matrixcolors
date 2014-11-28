@@ -16,6 +16,7 @@ function colorizeMatrixBlocks() {
 	$('.matrixblock').each(function () {
 		blockType = $(this).find('input[type="hidden"][name*="][type]"]').val();
 		$(this).css({'background-color':blockColors[blockType]});
+		$(this).find('.titlebar').css({'background-color':'rgba(255, 255, 255, 0.5)'});
 	});
 }
 
