@@ -21,7 +21,7 @@ class MatrixColorsPlugin extends BasePlugin
 
 	public function getVersion()
 	{
-		return '1.0.3';
+		return '1.0.4';
 	}
 
 	public function getDeveloper()
@@ -86,7 +86,7 @@ class MatrixColorsPlugin extends BasePlugin
 				$blockColors .= "'{$row['blockType']}':'{$row['backgroundColor']}'";
 			}
 		}
-		craft()->templates->includeJs('var blockColors = {'.$blockColors.'}');
+		craft()->templates->includeJs('var blockColors = {'.$blockColors.'};');
 		craft()->templates->includeJsResource('matrixcolors/js/matrixcolors.js');
 	}
 	
