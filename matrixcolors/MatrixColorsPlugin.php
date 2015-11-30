@@ -19,9 +19,24 @@ class MatrixColorsPlugin extends BasePlugin
 		return Craft::t('Matrix Colors');
 	}
 
+	public function getDescription()
+	{
+		return 'Identify your matrix blocks by giving each type a different color.';
+	}
+
+	public function getDocumentationUrl()
+	{
+		return 'https://github.com/lindseydiloreto/craft-matrixcolors';
+	}
+
 	public function getVersion()
 	{
-		return '1.0.4';
+		return '1.1.0';
+	}
+
+	public function getSchemaVersion()
+	{
+		return '1.1.0';
 	}
 
 	public function getDeveloper()
@@ -72,7 +87,7 @@ class MatrixColorsPlugin extends BasePlugin
 		));
 		// Output settings template
 		return craft()->templates->render('matrixcolors/_settings', array(
-			'matrixBlockColorsTable' => $matrixBlockColorsTable,
+			'matrixBlockColorsTable' => TemplateHelper::getRaw($matrixBlockColorsTable),
 		));
 	}
 
@@ -89,5 +104,5 @@ class MatrixColorsPlugin extends BasePlugin
 		craft()->templates->includeJs('var blockColors = {'.$blockColors.'};');
 		craft()->templates->includeJsResource('matrixcolors/js/matrixcolors.js');
 	}
-	
+
 }
