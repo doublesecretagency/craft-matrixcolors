@@ -31,7 +31,7 @@ class MatrixColorsPlugin extends BasePlugin
 
 	public function getVersion()
 	{
-		return '1.1.0';
+		return '1.1.1';
 	}
 
 	public function getSchemaVersion()
@@ -85,6 +85,8 @@ class MatrixColorsPlugin extends BasePlugin
 				'addRowLabel'  => Craft::t('Add a block type color'),
 			)
 		));
+		// Settings JS
+		craft()->templates->includeJsResource('matrixcolors/js/settings.js');
 		// Output settings template
 		return craft()->templates->render('matrixcolors/_settings', array(
 			'matrixBlockColorsTable' => TemplateHelper::getRaw($matrixBlockColorsTable),
@@ -94,14 +96,21 @@ class MatrixColorsPlugin extends BasePlugin
 	private function _colorBlocks()
 	{
 		$this->_matrixBlockColors = $this->getSettings()->matrixBlockColors;
-		$blockColors = '';
+		$colorList = array();
+		$js = '';
+		$css = '';
 		if ($this->_matrixBlockColors) {
 			foreach ($this->_matrixBlockColors as $row) {
-				if ($blockColors) {$blockColors .= ',';}
-				$blockColors .= "'{$row['blockType']}':'{$row['backgroundColor']}'";
+				$type = $row['blockType'];
+				$color = $row['backgroundColor'];
+				$colorList[] = $type;
+				$css .= "
+.mc-solid-{$type} {background-color: {$color};}
+.btngroup .btn.mc-gradient-{$type} {background-image: linear-gradient(white,{$color});}";
 			}
+			craft()->templates->includeCss($css);
 		}
-		craft()->templates->includeJs('var blockColors = {'.$blockColors.'};');
+		craft()->templates->includeJs('var colorList = '.json_encode($colorList).';');
 		craft()->templates->includeJsResource('matrixcolors/js/matrixcolors.js');
 	}
 
