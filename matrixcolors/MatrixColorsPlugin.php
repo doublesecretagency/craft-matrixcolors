@@ -101,12 +101,24 @@ class MatrixColorsPlugin extends BasePlugin
 		$css = '';
 		if ($this->_matrixBlockColors) {
 			foreach ($this->_matrixBlockColors as $row) {
-				$type = $row['blockType'];
+				//	in case of comma-separated string is given extract all block type handles
+				$types = explode(',', $row['blockType']);
 				$color = $row['backgroundColor'];
-				$colorList[] = $type;
-				$css .= "
+
+				//	iterate each handle for the current color definition
+				foreach ($types as $type) {
+					$type = trim($type);
+
+					//	ensure we only accept non-empty strings
+					if (empty($type)) {
+						continue;
+					}
+
+					$colorList[] = $type;
+					$css .= "
 .mc-solid-{$type} {background-color: {$color};}
 .btngroup .btn.mc-gradient-{$type} {background-image: linear-gradient(white,{$color});}";
+				}
 			}
 			craft()->templates->includeCss($css);
 		}
