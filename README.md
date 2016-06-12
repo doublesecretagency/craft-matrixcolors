@@ -15,6 +15,8 @@ Enter your **matrix block type handle** and the **CSS color**. Any CSS color for
 
 Rinse & repeat for every block type which you'd like to assign a color to.
 
-**New in v1.1.2** - You can assign the same color to multiple block types using the same definition, by separating them with a comma.
+---
+
+**New in v1.1.2** - You can assign the same color to multiple block types by separating them with a comma.
 
 ![](README-images/example-comma-separated.png)
