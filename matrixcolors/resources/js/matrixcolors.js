@@ -18,8 +18,8 @@ function colorizeMatrixButtons() {
 	}
 }
 
-// Find list items in dropdown menu related to Matrix, update background color
-function colorizeMatrixDropdown() {
+// Find list items in menus related to Matrix, update background color
+function colorizeMatrixMenus() {
 	for (var i in colorList) {
 		$('.menu').find('a[data-type="'+colorList[i]+'"]').addClass('mc-solid-'+colorList[i]);
 	}
@@ -29,7 +29,7 @@ function colorizeMatrixDropdown() {
 function colorizeAll() {
 	colorizeMatrixBlocks();
 	colorizeMatrixButtons();
-	colorizeMatrixDropdown();
+	colorizeMatrixMenus();
 }
 
 // Refresh colorization over a timed period
@@ -50,12 +50,17 @@ function timedRefresh() {
 // On load, colorize blocks
 $(function () {
 	colorizeAll();
+	// Colorize existing menus
+	var observer = new MutationObserver(function() {
+		colorizeMatrixMenus();
+	});
+	observer.observe(document.body, {childList: true});
 });
 
 // Listen for new blocks
 $(document).on('click', '.matrix .btn, .menu ul li a', function () {
 	colorizeMatrixBlocks();
-	colorizeMatrixDropdown();
+	colorizeMatrixMenus();
 });
 
 // Listen for changed entry type

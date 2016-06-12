@@ -31,7 +31,7 @@ class MatrixColorsPlugin extends BasePlugin
 
 	public function getVersion()
 	{
-		return '1.1.1';
+		return '1.1.2';
 	}
 
 	public function getSchemaVersion()
@@ -96,32 +96,34 @@ class MatrixColorsPlugin extends BasePlugin
 	private function _colorBlocks()
 	{
 		$this->_matrixBlockColors = $this->getSettings()->matrixBlockColors;
-		$colorList = array();
-		$js = '';
 		$css = '';
+		$colorList = array();
+		// Loop through block colors
 		if ($this->_matrixBlockColors) {
 			foreach ($this->_matrixBlockColors as $row) {
-				//	in case of comma-separated string is given extract all block type handles
-				$types = explode(',', $row['blockType']);
+				// Set color
 				$color = $row['backgroundColor'];
-
-				//	iterate each handle for the current color definition
+				// Split comma-separated strings
+				$types = explode(',', $row['blockType']);
+				// Loop over each block type
 				foreach ($types as $type) {
 					$type = trim($type);
-
-					//	ensure we only accept non-empty strings
+					// Ignore empty strings
 					if (empty($type)) {
 						continue;
 					}
-
+					// Add type to color list
 					$colorList[] = $type;
+					// Set CSS for type
 					$css .= "
 .mc-solid-{$type} {background-color: {$color};}
 .btngroup .btn.mc-gradient-{$type} {background-image: linear-gradient(white,{$color});}";
 				}
 			}
+			// Load CSS
 			craft()->templates->includeCss($css);
 		}
+		// Load JS
 		craft()->templates->includeJs('var colorList = '.json_encode($colorList).';');
 		craft()->templates->includeJsResource('matrixcolors/js/matrixcolors.js');
 	}
