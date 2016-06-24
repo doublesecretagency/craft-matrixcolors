@@ -6,8 +6,11 @@ function colorizeMatrixBlocks() {
 	var blockType;
 	$('.matrixblock').each(function () {
 		blockType = $(this).find('input[type="hidden"][name*="][type]"]').val();
-		$(this).addClass('mc-solid-'+blockType);
-		$(this).find('.titlebar').css({'background-color':'rgba(255, 255, 255, 0.5)'});
+		// If block type is in the color list
+		if (-1 < colorList.indexOf(blockType)) {
+			$(this).addClass('mc-solid-'+blockType);
+			$(this).find('.titlebar').css({'background-color':'rgba(255, 255, 255, 0.5)'});
+		}
 	});
 }
 
