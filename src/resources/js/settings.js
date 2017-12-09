@@ -1,20 +1,19 @@
-
 var textareas = '#settings-matrixBlockColors td:nth-child(2) textarea';
 
 // On load, colorize cells
 $(function () {
-	var $cells = $(textareas);
-	$cells.each(function () {
-		changeColor($(this));
-	});
+    var $cells = $(textareas);
+    $cells.each(function () {
+        changeColor($(this));
+    });
 });
 
 // Listen for changes
 $(document).on('keyup', textareas, function () {
-	changeColor($(this));
+    changeColor($(this));
 });
 
 // Change table cell color
 function changeColor(el) {
-	el.css({'background-color': el.val()});
+    el.css({'background-color': el.val()});
 }
