@@ -2,7 +2,7 @@
     "name": "doublesecretagency/craft-matrixcolors",
     "description": "Identify your matrix blocks by giving each type a different color.",
     "type": "craft-plugin",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "keywords": [
         "craft",
         "cms",
@@ -34,8 +34,6 @@
         "name": "Matrix Colors",
         "handle": "matrix-colors",
         "schemaVersion": "2.0.0",
-        "hasCpSettings": true,
-        "hasCpSection": false,
         "changelogUrl": "https://raw.githubusercontent.com/doublesecretagency/craft-matrixcolors/v2/CHANGELOG.md",
         "class": "doublesecretagency\\matrixcolors\\MatrixColors"
     }

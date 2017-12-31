@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.1 - 2017-12-30
+
+### Changed
+- Now references `hasCpSettings` from PHP instead of Composer.
+
 ## 2.0.0 - 2017-12-08
 
 ### Added

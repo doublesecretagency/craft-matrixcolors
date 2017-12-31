@@ -30,6 +30,9 @@ class MatrixColors extends Plugin
     /** @var Plugin  $plugin  Self-referential plugin property. */
     public static $plugin;
 
+    /** @var bool  $hasCpSettings  The plugin has a settings page. */
+    public $hasCpSettings = true;
+
     /** @var array  $_matrixBlockColors  Complete mapping of matrix block colors. */
     private $_matrixBlockColors;
 
