@@ -9,7 +9,9 @@
         "craftcms",
         "craft-plugin",
         "matrix-colors",
-        "matrix"
+        "matrix",
+        "colors",
+        "colours"
     ],
     "support": {
         "docs": "https://github.com/doublesecretagency/craft-matrixcolors/blob/v2/README.md",
