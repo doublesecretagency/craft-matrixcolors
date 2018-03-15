@@ -5,6 +5,14 @@ Easily identify your matrix blocks, by assigning a different color for each bloc
 
 ![](README-images/example-matrix-field.png)
 
+***
+
+>This version is for Craft 2. To install it, download and move the `matrixcolors` folder into your `craft/plugins` directory.
+>
+>For the Craft 3 version, see the [`v2` branch...](https://github.com/doublesecretagency/craft-matrixcolors/tree/v2)
+
+***
+
 After you've installed the plugin, go to:
 
 - Settings > Plugins > Matrix Colors
