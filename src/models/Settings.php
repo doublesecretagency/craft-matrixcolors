@@ -20,7 +20,9 @@ use craft\base\Model;
 class Settings extends Model
 {
 
-    /** @var mixed|null  $matrixBlockColors  Mapping of colors for Matrix block types. */
-    public $matrixBlockColors = [];
+    /**
+     * @var mixed|null Mapping of colors for Matrix block types.
+     */
+    public mixed $matrixBlockColors = [];
 
 }

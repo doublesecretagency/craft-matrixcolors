@@ -21,8 +21,10 @@ use craft\web\assets\cp\CpAsset;
 class ColorsAssets extends AssetBundle
 {
 
-    /** @inheritdoc */
-    public function init()
+    /**
+     * @inheritdoc
+     */
+    public function init(): void
     {
         parent::init();
 

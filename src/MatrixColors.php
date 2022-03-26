@@ -13,12 +13,14 @@ namespace doublesecretagency\matrixcolors;
 
 use Craft;
 use craft\base\Plugin;
+use craft\helpers\Cp;
+use craft\helpers\Json;
 use craft\helpers\Template;
 use craft\web\View;
-
 use doublesecretagency\matrixcolors\models\Settings;
-use doublesecretagency\matrixcolors\web\assets\SettingsAssets;
 use doublesecretagency\matrixcolors\web\assets\ColorsAssets;
+use doublesecretagency\matrixcolors\web\assets\SettingsAssets;
+use yii\base\InvalidConfigException;
 
 /**
  * Class MatrixColors
@@ -27,17 +29,25 @@ use doublesecretagency\matrixcolors\web\assets\ColorsAssets;
 class MatrixColors extends Plugin
 {
 
-    /** @var Plugin  $plugin  Self-referential plugin property. */
-    public static $plugin;
+    /**
+     * @var Plugin Self-referential plugin property.
+     */
+    public static Plugin $plugin;
 
-    /** @var bool  $hasCpSettings  The plugin has a settings page. */
-    public $hasCpSettings = true;
+    /**
+     * @var bool The plugin has a settings page.
+     */
+    public bool $hasCpSettings = true;
 
-    /** @var array  $_matrixBlockColors  Complete mapping of matrix block colors. */
-    private $_matrixBlockColors;
+    /**
+     * @var array Complete mapping of matrix block colors.
+     */
+    private array $_matrixBlockColors;
 
-    /** @inheritDoc */
-    public function init()
+    /**
+     * @inheritdoc
+     */
+    public function init(): void
     {
         parent::init();
         self::$plugin = $this;
@@ -47,15 +57,15 @@ class MatrixColors extends Plugin
     }
 
     /**
-     * @return Settings  Plugin settings model.
+     * @inheritdoc
      */
-    protected function createSettingsModel()
+    protected function createSettingsModel(): Settings
     {
         return new Settings();
     }
 
     /**
-     * @return string  The fully rendered settings template.
+     * @inheritdoc
      */
     protected function settingsHtml(): string
     {
@@ -66,26 +76,27 @@ class MatrixColors extends Plugin
             $this->_matrixBlockColors = [['blockType' => '', 'backgroundColor' => '']];
         }
         // Generate table
-        $matrixBlockColorsTable = $view->renderTemplateMacro('_includes/forms', 'editableTableField', [
-            [
-                'label'        => Craft::t('matrix-colors', 'Block Type Colors'),
-                'instructions' => Craft::t('matrix-colors', 'Add background colors to your matrix block types'),
-                'id'           => 'matrixBlockColors',
-                'name'         => 'matrixBlockColors',
-                'cols'         => [
-                    'blockType' => [
-                        'heading' => Craft::t('matrix-colors', 'Block Type Handle'),
-                        'type'    => 'singleline',
-                    ],
-                    'backgroundColor' => [
-                        'heading' => Craft::t('matrix-colors', 'CSS Background Color'),
-                        'type'    => 'singleline',
-                        'class'   => 'code',
-                    ],
+        $matrixBlockColorsTable = Cp::editableTableFieldHtml([
+            'label' => Craft::t('matrix-colors', "Block Type Colors"),
+            'instructions' => Craft::t('matrix-colors', "Add background colors to your matrix block types."),
+            'id' => 'matrixBlockColors',
+            'name' => 'matrixBlockColors',
+            'cols' => [
+                'blockType' => [
+                    'heading' => Craft::t('matrix-colors', 'Block Type Handle'),
+                    'type' => 'singleline',
                 ],
-                'rows' => $this->_matrixBlockColors,
-                'addRowLabel'  => Craft::t('matrix-colors', 'Add a block type color'),
-            ]
+                'backgroundColor' => [
+                    'heading' => Craft::t('matrix-colors', 'CSS Background Color'),
+                    'type' => 'singleline',
+                    'class' => 'code',
+                ],
+            ],
+            'rows' => $this->_matrixBlockColors,
+            'addRowLabel'  => Craft::t('matrix-colors', 'Add a block type color'),
+            'allowAdd' => true,
+            'allowReorder' => true,
+            'allowDelete' => true,
         ]);
         // Settings JS
         $view->registerAssetBundle(SettingsAssets::class);
@@ -96,13 +107,15 @@ class MatrixColors extends Plugin
     }
 
     /**
-     * @return void
+     * Register the CSS and JS necessary to colorize Matrix blocks.
+     *
+     * @throws InvalidConfigException
      */
-    private function _colorBlocks()
+    private function _colorBlocks(): void
     {
         $view = Craft::$app->getView();
         $settings = $this->getSettings();
-        $this->_matrixBlockColors = $settings->matrixBlockColors;
+        $this->_matrixBlockColors = $settings->matrixBlockColors ?? [];
         $css = '';
         $colorList = [];
         // Loop through block colors
@@ -131,7 +144,7 @@ class MatrixColors extends Plugin
             $view->registerCss($css);
         }
         // Load JS
-        $view->registerJs('var colorList = '.json_encode($colorList).';', View::POS_HEAD);
+        $view->registerJs('var colorList = '.Json::encode($colorList).';', View::POS_HEAD);
         $view->registerAssetBundle(ColorsAssets::class);
     }
 
