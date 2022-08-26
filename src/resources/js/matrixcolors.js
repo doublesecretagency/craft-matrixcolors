@@ -28,11 +28,27 @@ function colorizeMatrixMenus() {
     }
 }
 
+// Find buttons related to Neo, update background color
+function colorizeNeoButtons() {
+    for (var i in colorList) {
+        $('.neo-input').find('.btn[data-neo-bn-info="'+colorList[i]+'"]').addClass('mc-gradient-'+colorList[i]);
+    }
+}
+
+// Find list items in menus related to Neo, update background color
+function colorizeNeoMenus() {
+    for (var i in colorList) {
+        $('.menu').find('a[data-neo-bn-info="'+colorList[i]+'"]').addClass('mc-solid-'+colorList[i]);
+    }
+}
+
 // Colorize all components
 function colorizeAll() {
     colorizeMatrixBlocks();
     colorizeMatrixButtons();
     colorizeMatrixMenus();
+    colorizeNeoButtons();
+    colorizeNeoMenus();
 }
 
 // Refresh colorization over a timed period
@@ -53,18 +69,30 @@ function timedRefresh() {
 // On load, colorize blocks
 $(function () {
     colorizeAll();
-    // Colorize existing menus
+    // Colorize existing menus and Neo buttons
     var observer = new MutationObserver(function() {
         colorizeMatrixMenus();
+        colorizeNeoButtons();
+        colorizeNeoMenus();
     });
     observer.observe(document.body, {childList: true});
 });
 
-// Listen for new blocks
+// Listen for new Matrix blocks
 $(document).on('click', '.matrix .btn, .menu ul li a', function () {
     colorizeMatrixBlocks();
     colorizeMatrixMenus();
 });
+
+// Listen for new Neo blocks
+$(document).on(
+    'click',
+    '.neo-input .btn, a[data-neo-bn="button.addBlock"], .menu ul li a[data-action="add"]',
+    function () {
+        colorizeNeoButtons();
+        colorizeNeoMenus();
+    }
+);
 
 // Listen for changed entry type
 $(document).on('change', '#entryType', function () {
