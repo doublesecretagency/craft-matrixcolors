@@ -114,8 +114,10 @@ class MatrixColors extends Plugin
     private function _colorBlocks(): void
     {
         $view = Craft::$app->getView();
+        $pluginsService = Craft::$app->getPlugins();
         $settings = $this->getSettings();
         $this->_matrixBlockColors = $settings->matrixBlockColors ?? [];
+        $addNeoCss = $pluginsService->isPluginInstalled('neo') && $pluginsService->isPluginEnabled('neo');
         $css = '';
         $colorList = [];
         // Loop through block colors
@@ -138,6 +140,12 @@ class MatrixColors extends Plugin
                     $css .= "
 .mc-solid-{$type} {background-color: {$color};}
 .btngroup .btn.mc-gradient-{$type} {background-image: linear-gradient(white,{$color});}";
+                    // If Neo is installed and enabled, set CSS for even-level blocks
+                    if ($addNeoCss) {
+                        $css .= "
+.ni_block.is-level-even.mc-solid-{$type} {background-color: {$color};}
+.ni_block.is-level-even.mc-solid-{$type} > .ni_block_body {background-color: rgba(255, 255, 255, 0.5);}";
+                    }
                 }
             }
             // Load CSS

@@ -1,17 +1,21 @@
 // ==================================================================== //
 // BEHAVIOR
 
-// Find all matrix blocks, add specified background color
-function colorizeMatrixBlocks() {
+function _colorizeBlocks(blockClass, blockTitlebarClass) {
     var blockType;
-    $('.matrixblock').each(function () {
+    $(blockClass).each(function () {
         blockType = $(this).find('input[type="hidden"][name*="][type]"]').val();
         // If block type is in the color list
         if (-1 < colorList.indexOf(blockType)) {
             $(this).addClass('mc-solid-'+blockType);
-            $(this).find('.titlebar').css({'background-color':'rgba(255, 255, 255, 0.5)'});
+            $(this).find(blockTitlebarClass).css({'background-color':'rgba(255, 255, 255, 0.5)'});
         }
     });
+}
+
+// Find all matrix blocks, add specified background color
+function colorizeMatrixBlocks() {
+    _colorizeBlocks('.matrixblock', '.titlebar');
 }
 
 // Find buttons related to Matrix, update background color
@@ -26,6 +30,11 @@ function colorizeMatrixMenus() {
     for (var i in colorList) {
         $('.menu').find('a[data-type="'+colorList[i]+'"]').addClass('mc-solid-'+colorList[i]);
     }
+}
+
+// Find all Neo blocks, add specified background color
+function colorizeNeoBlocks() {
+    _colorizeBlocks('.ni_block', '.ni_block_topbar');
 }
 
 // Find buttons related to Neo, update background color
@@ -47,6 +56,7 @@ function colorizeAll() {
     colorizeMatrixBlocks();
     colorizeMatrixButtons();
     colorizeMatrixMenus();
+    colorizeNeoBlocks();
     colorizeNeoButtons();
     colorizeNeoMenus();
 }
@@ -89,6 +99,7 @@ $(document).on(
     'click',
     '.neo-input .btn, a[data-neo-bn="button.addBlock"], .menu ul li a[data-action="add"]',
     function () {
+        colorizeNeoBlocks();
         colorizeNeoButtons();
         colorizeNeoMenus();
     }
