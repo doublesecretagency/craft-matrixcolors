@@ -141,6 +141,7 @@ class MatrixColors extends Plugin
 .mc-solid-{$type} {background-color: {$color};}
 .btngroup .btn.mc-gradient-{$type} {background-image: linear-gradient(white,{$color});}";
                     // If Neo is installed and enabled, set CSS for even-level blocks and Matrix sub-fields
+                    // (since Neo sets styles for those cases which will override the above)
                     if ($addNeoCss) {
                         $css .= "
 .ni_block.is-level-even.mc-solid-{$type}, .ni_block .matrix .mc-solid-{$type} {background-color: {$color};}
