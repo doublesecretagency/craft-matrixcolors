@@ -78,7 +78,7 @@ class MatrixColors extends Plugin
         // Generate table
         $matrixBlockColorsTable = Cp::editableTableFieldHtml([
             'label' => Craft::t('matrix-colors', "Block Type Colors"),
-            'instructions' => Craft::t('matrix-colors', "Add background colors to your matrix block types."),
+            'instructions' => Craft::t('matrix-colors', "Add background colors to your Matrix block types (or Neo block types)."),
             'id' => 'matrixBlockColors',
             'name' => 'matrixBlockColors',
             'cols' => [
@@ -106,6 +106,8 @@ class MatrixColors extends Plugin
         ]);
     }
 
+    // ========================================================================= //
+
     /**
      * Register the CSS and JS necessary to colorize Matrix blocks.
      *
@@ -113,48 +115,88 @@ class MatrixColors extends Plugin
      */
     private function _colorBlocks(): void
     {
-        $view = Craft::$app->getView();
-        $pluginsService = Craft::$app->getPlugins();
+        // Get settings
         $settings = $this->getSettings();
-        $this->_matrixBlockColors = $settings->matrixBlockColors ?? [];
-        $addNeoCss = $pluginsService->isPluginInstalled('neo') && $pluginsService->isPluginEnabled('neo');
+
+        // Get colors from settings
+        $this->_matrixBlockColors = ($settings->matrixBlockColors ?? []);
+
+        // If no colors specified, bail
+        if (!$this->_matrixBlockColors) {
+            return;
+        }
+
+        // Whether the Neo plugin is being used
+        $usingNeo = Craft::$app->getPlugins()->isPluginEnabled('neo');
+
+        // Initialize the CSS and color list
         $css = '';
         $colorList = [];
+
         // Loop through block colors
-        if ($this->_matrixBlockColors) {
-            foreach ($this->_matrixBlockColors as $row) {
-                // Set color
-                $color = $row['backgroundColor'];
-                // Split comma-separated strings
-                $types = explode(',', $row['blockType']);
-                // Loop over each block type
-                foreach ($types as $type) {
-                    $type = trim($type);
-                    // Ignore empty strings
-                    if (empty($type)) {
-                        continue;
-                    }
-                    // Add type to color list
-                    $colorList[] = $type;
-                    // Set CSS for type
-                    $css .= "
-.mc-solid-{$type} {background-color: {$color};}
-.btngroup .btn.mc-gradient-{$type} {background-image: linear-gradient(white,{$color});}";
-                    // If Neo is installed and enabled, set CSS for even-level blocks and Matrix sub-fields
-                    // (since Neo sets styles for those cases which will override the above)
-                    if ($addNeoCss) {
-                        $css .= "
-.ni_block.is-level-even.mc-solid-{$type}, .ni_block .matrix .mc-solid-{$type} {background-color: {$color};}
-.ni_block.is-level-even.mc-solid-{$type} > .ni_block_body {background-color: rgba(255, 255, 255, 0.5);}";
-                    }
+        foreach ($this->_matrixBlockColors as $row) {
+            // Get background color
+            $color = $row['backgroundColor'];
+            // Get block types
+            $types = explode(',', $row['blockType']);
+            // Loop over each block type
+            foreach ($types as $type) {
+                // Trim the type
+                $type = trim($type);
+                // Ignore empty strings
+                if (!$type) {
+                    continue;
+                }
+                // Add type to color list
+                $colorList[] = $type;
+                // Set CSS for Matrix block type
+                $css .= $this->_matrixBlockCss($type, $color);
+                // If using Neo
+                if ($usingNeo) {
+                    // Set CSS for Neo block type
+                    $css .= $this->_neoBlockCss($type, $color);
                 }
             }
-            // Load CSS
-            $view->registerCss($css);
         }
-        // Load JS
-        $view->registerJs('var colorList = '.Json::encode($colorList).';', View::POS_HEAD);
+
+        // Get view services
+        $view = Craft::$app->getView();
+
+        // Pass color list to JavaScript
+        $js = 'var colorList = '.Json::encode($colorList).';';
+
+        // Load assets
         $view->registerAssetBundle(ColorsAssets::class);
+        $view->registerCss($css);
+        $view->registerJs($js, View::POS_HEAD);
+    }
+
+    /**
+     * Generate CSS to colorize a Matrix block type.
+     *
+     * @param $type
+     * @param $color
+     * @return string
+     */
+    private function _matrixBlockCss($type, $color): string
+    {
+        return "
+.mc-solid-{$type} {background-color: {$color};}
+.btngroup .btn.mc-gradient-{$type} {background-image: linear-gradient(white,{$color});}";
+    }
+
+    /**
+     * Generate CSS to colorize a Neo block type.
+     *
+     * @param $type
+     * @param $color
+     * @return string
+     */
+    private function _neoBlockCss($type, $color): string
+    {
+        return "
+.ni_block.is-level-even.mc-solid-{$type}, .ni_block .matrix .mc-solid-{$type} {background-color: {$color};}
+.ni_block.is-level-even.mc-solid-{$type} > .ni_block_body {background-color: rgba(255, 255, 255, 0.5);}";
     }
 
 }

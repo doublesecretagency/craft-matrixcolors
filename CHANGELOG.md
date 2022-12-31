@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+### Added
+- Added full support for Neo block types. (thanks @ttempleton)
+
 ## 2.1.0 - 2022-03-26
 
 ### Added

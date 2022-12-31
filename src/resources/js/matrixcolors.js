@@ -89,10 +89,14 @@ $(function () {
 });
 
 // Listen for new Matrix blocks
-$(document).on('click', '.matrix .btn, .menu ul li a', function () {
-    colorizeMatrixBlocks();
-    colorizeMatrixMenus();
-});
+$(document).on(
+    'click',
+    '.matrix .btn, .menu ul li a',
+    function () {
+        colorizeMatrixBlocks();
+        colorizeMatrixMenus();
+    }
+);
 
 // Listen for new Neo blocks
 $(document).on(

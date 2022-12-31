@@ -1,3 +1,17 @@
 {{ matrixBlockColorsTable }}
 
-<p>You can use any colors you want, but pastels (light colors) tend to look better.</p>
+<div class="readable settings-tips">
+    <blockquote class="note tip">
+        <ul>
+            <li>Any CSS color format is valid. If using a hex code, be sure to include the "<code>#</code>" prefix.</li>
+            <li>You can use any colors you want, but pastels (light colors) tend to look better.</li>
+        </ul>
+    </blockquote>
+</div>
+
+{% css %}
+.settings-tips ul {
+    list-style: disc;
+    margin: 2px 0;
+}
+{% endcss %}
