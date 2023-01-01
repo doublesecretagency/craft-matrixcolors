@@ -1,9 +1,12 @@
 # Changelog
 
-## Unreleased
+## 3.0.0 - 2022-12-31
 
 ### Added
 - Added full support for Neo block types. (thanks @ttempleton)
+
+### Changed
+- Improved images and instructions in README.
 
 ## 2.1.0 - 2022-03-26
 
