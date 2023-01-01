@@ -1,4 +1,4 @@
-<img align="left" width="120" src="https://raw.githubusercontent.com/doublesecretagency/craft-matrixcolors/44adebae6d94a73a9d251722406440d61c344f46/src/icon.svg" alt="Plugin icon">
+<img align="left" width="120" src="https://raw.githubusercontent.com/doublesecretagency/craft-matrixcolors/467645a603a313901652d82a1aff6dc3c770deb7/src/icon.svg" alt="Plugin icon">
 
 # Matrix Colors plugin for Craft CMS
 
@@ -23,7 +23,7 @@ Once the plugin is installed, manage the colors of your Matrix block types (or N
 </p>
 
 <p align="center">
-    <img width="401" alt="Screenshot of navigating to the plugin's settings page" src="https://user-images.githubusercontent.com/5309692/210157558-08590fbc-a969-4d4a-9eb1-bf28311925ae.png">
+    <img width="401" alt="Screenshot of navigating to the plugin's settings page" src="https://raw.githubusercontent.com/doublesecretagency/craft-matrixcolors/467645a603a313901652d82a1aff6dc3c770deb7/src/resources/img/settings.png">
 </p>
 
 ## Basic Usage
@@ -31,13 +31,13 @@ Once the plugin is installed, manage the colors of your Matrix block types (or N
 To set the background color of a Matrix (or Neo) block type, enter the **block type handle** and desired **CSS color**.
 
 <p align="center">
-    <img width="785" alt="Example of block type settings page" src="https://user-images.githubusercontent.com/5309692/210157564-c7bb0eb1-fbcf-45df-a5d9-67cad621c5b2.png">
+    <img width="785" alt="Example of block type settings page" src="https://raw.githubusercontent.com/doublesecretagency/craft-matrixcolors/467645a603a313901652d82a1aff6dc3c770deb7/src/resources/img/block-type-colors.png">
 </p>
 
 Here's what that looks like in a Matrix field...
 
 <p align="center">
-    <img width="785" alt="Example of Matrix field using colorized blocks" src="https://user-images.githubusercontent.com/5309692/210157567-010abba3-6625-4142-bb36-dfdea1d38d3a.png">
+    <img width="785" alt="Example of Matrix field using colorized blocks" src="https://raw.githubusercontent.com/doublesecretagency/craft-matrixcolors/467645a603a313901652d82a1aff6dc3c770deb7/src/resources/img/matrix-field.png">
 </p>
 
 Repeat for every block type which you'd like to assign a color to.
@@ -49,7 +49,7 @@ You can use any colors you want, but pastels (lighter colors) tend to look bette
 You can easily specify the same color for multiple block types. Either give each block type its own row, or list them all together using commas to separate each block type handle.
 
 <p align="center">
-    <img width="785" alt="Example of multiple block types sharing the same color" src="https://user-images.githubusercontent.com/5309692/210157555-a7797d0c-b4ae-44f1-a6df-580a23254b43.png">
+    <img width="785" alt="Example of multiple block types sharing the same color" src="https://raw.githubusercontent.com/doublesecretagency/craft-matrixcolors/467645a603a313901652d82a1aff6dc3c770deb7/src/resources/img/shared-color.png">
 </p>
 
 ## Neo Support
